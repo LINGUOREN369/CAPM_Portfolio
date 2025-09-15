@@ -1,0 +1,21 @@
+# config.yaml
+
+# List of stock tickers to download
+DOWNLOAD_STOCK_TICKER_LIST:
+  - AAPL
+  - MSFT
+  - TSLA
+  - AMZN
+
+# Intraday settings
+INTRADAY_INTERVAL: "60min"   # One of: "1min", "5min", "15min", "30min", "60min"
+OUTPUTSIZE: "full"           # "compact" (last 100 pts) or "full"
+
+# Folder where CSVs will be saved
+DATA_PATH: "./data"
+
+# CAPM-related config (for later steps)
+MARKET_PROXY: "SPY"          # Benchmark index (ETF ticker)
+RISK_FREE_RATE:
+  source: "FRED"             # Where to pull the risk-free rate
+  series: "DTB3"             # 3-Month T-Bill series code at FRED
