@@ -1,5 +1,7 @@
 # config.yaml
 
+
+## Congfiguration for fetch_data.py
 # List of stock tickers to download
 DOWNLOAD_STOCK_TICKER_LIST:
   - AAPL
@@ -19,3 +21,16 @@ MARKET_PROXY: "SPY"          # Benchmark index (ETF ticker)
 RISK_FREE_RATE:
   source: "FRED"             # Where to pull the risk-free rate
   series: "DTB3"             # 3-Month T-Bill series code at FRED
+
+
+
+## Configuration for metrics.py
+# List of stock tickers for calculations
+STOCK_CALCULATION_LIST:
+  - CRCL
+  - MSFT
+  - TSLA
+
+# Calculation period
+CALCULATION_START_DATE: "2020-01-01"
+CALCULATION_END_DATE: "2023-12-31"

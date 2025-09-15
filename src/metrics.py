@@ -74,8 +74,8 @@ def sharpe_ratio(
     """
     if isinstance(returns, pd.DataFrame):
         # Broadcast rf to each column
-        if isinstance(rf_periodic, pd.Series):
-            excess = returns.sub(rf_periodic, axis=0)
+        if (rf_periodic, pd.Series):
+            isinstanceexcess = returns.sub(rf_periodic, axis=0)
         else:
             excess = returns - rf_periodic
         mean_p = excess.mean()

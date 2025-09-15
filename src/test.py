@@ -1,23 +1,40 @@
 import pandas as pd
-from metrics import to_returns, annualize_mean_arith, annualize_vol, cumret_log, sharpe_ratio, max_drawdown
+from metrics import to_returns, annualize_mean_geom, annualize_vol, cumret_log, sharpe_ratio, max_drawdown
+import yaml
 
-# prices: DataFrame with columns per ticker
-prices = pd.read_csv("data/AAPL_daily.csv", index_col=0, parse_dates=True)[["4. close"]].rename(columns={"4. close":"AAPL"})
+# Load config
+with open("config.yaml", "r") as f:
+    config = yaml.safe_load(f)
 
-# 1) Returns
-r = to_returns(prices["AAPL"], method="log")          # daily log returns
+ticker = config["STOCK_CALCULATION_LIST"][1]
+start_date = config.get("CALCULATION_START_DATE", "2020-01-01")
+end_date = config.get("CALCULATION_END_DATE", None)
 
-# 2) Annualized stats (CAPM-style)
-mean_ann = annualize_mean_arith(r.mean(), "1d")       # arithmetic annualized mean
-vol_ann  = annualize_vol(r.std(ddof=1), "1d")         # annualized vol
+# Load prices
+prices = (
+    pd.read_csv(f"data/{ticker}_daily.csv", index_col=0, parse_dates=True)[["4. close"]]
+      .rename(columns={"4. close": ticker})
+)
+
+prices = prices.loc[start_date:end_date].copy().dropna()
+
+# 1) Daily returns (log, for analysis)
+r = to_returns(prices[ticker], method="log")
+
+# 2) Annualized stats (CAGR for reporting)
+mean_ann = annualize_mean_geom(r.mean(), "1d")
+vol_ann  = annualize_vol(r.std(ddof=1), "1d")
 
 # 3) Equity curve
-curve = cumret_log(r)                                  # growth of $1 - 1
+curve = cumret_log(r)
 
 # 4) Risk metrics
-sr = sharpe_ratio(r, rf_periodic=0.0, interval="1d")  # annualized Sharpe
+sr  = sharpe_ratio(r, rf_periodic=0.0, interval="1d")
 mdd = max_drawdown(curve, from_returns=False)
 
-
-
-print(f"Mean (ann): {mean_ann:.2%}, Vol (ann): {vol_ann:.2%}, Sharpe: {sr:.2f}, Max Drawdown: {mdd:.2%}")
+## Beatiful print
+print(f"Ticker: {ticker} from {prices.index.min().date()} to {prices.index.max().date()} ({len(prices)} days)")
+print(f"CAGR: {mean_ann:.2%}")
+print(f"Volatility: {vol_ann:.2%}")
+print(f"Sharpe Ratio: {sr:.2f}")
+print(f"Max Drawdown: {mdd:.2%}")
