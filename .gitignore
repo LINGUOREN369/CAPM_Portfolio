@@ -1,11 +1,30 @@
+# Project artifacts
+/data/
+/reports/
+
+# Generated assets
 *.csv
 *.png
 *.jpg
 *.jpeg
 *.pdf
 
-data/
+# Python cache
 __pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.env
+.env.*
+/.venv/
+/venv/
+/env/
+/.mypy_cache/
+
+# Jupyter
 .ipynb_checkpoints/
-env/
-venv/
+
+# OS metadata
+.DS_Store
+Thumbs.db

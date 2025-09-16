@@ -4,7 +4,7 @@ This project implements a full workflow for building and analyzing a portfolio u
 
 ---
 
-## ✨ Features
+## Features
 - Download historical price data from Alpha Vantage (or load from local CSVs).
 - Compute **simple returns** or **log returns**.
 - Estimate stock **betas** relative to a market benchmark (e.g. S&P 500 / SPY).
@@ -14,7 +14,7 @@ This project implements a full workflow for building and analyzing a portfolio u
 
 ---
 
-## 🔄 Data → Metrics → Report
+## Data → Metrics → Report
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────────┐
@@ -64,7 +64,7 @@ This project implements a full workflow for building and analyzing a portfolio u
 
 ⸻
 
-📈 CAPM Workflow
+CAPM Workflow
 
 ┌────────────────────────────────────────────────────────────────────────────┐
 │                         CAPM (run in either space)                         │
@@ -92,12 +92,12 @@ Reporting:
 
 CAPM_Portfolio/
 ├─ README.md
-├─ requirements.txt
-├─ config.yaml
+├─ environment.yaml   # optional conda environment
+├─ config.yaml        # configuration for data fetch + CAPM run
 ├─ data/              # CSVs saved here
 ├─ reports/           # charts/tables
 └─ src/
-   ├─ download_data.py   # fetch raw data (Alpha Vantage, etc.)
+   ├─ fetch_data.py      # fetch raw data (Alpha Vantage, etc.)
    ├─ metrics.py         # returns, annualization, cumulative returns
    ├─ capm.py            # betas, CAPM expected return, summary
    └─ run_capm.py        # the driver script that ties it all together
@@ -105,7 +105,7 @@ CAPM_Portfolio/
 
 ⸻
 
-📜 Notes on Annualization
+Notes on Annualization
 	•	Mean returns
 	•	Arithmetic mean × 252 → expected annual return (CAPM style).
 	•	Log mean × 252, then exp(·) − 1 → CAGR (performance reporting).
@@ -118,13 +118,18 @@ CAPM_Portfolio/
 ⚡ Quick Start
 
 # 1. Install dependencies
-pip install -r requirements.txt
+## Conda (recommended)
+conda env create -f environment.yaml
+conda activate atr_sigma_rvol
+
+## Pip (minimal example)
+pip install numpy "pandas<2" scipy statsmodels matplotlib pyyaml pillow alpha_vantage
 
 # 2. Set your API key (bash/zsh)
 export ALPHA_VANTAGE_API_KEY="your_api_key_here"
 
 # 3. Download data
-python src/download_data.py
+python src/fetch_data.py
 
 # 4. Run CAPM analysis
 python src/run_capm.py
@@ -137,4 +142,3 @@ python src/run_capm.py
 MIT
 
 ---
-

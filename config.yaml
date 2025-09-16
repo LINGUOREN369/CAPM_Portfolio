@@ -5,11 +5,9 @@
 # List of stock tickers to download
 DOWNLOAD_STOCK_TICKER_LIST:
   - AAPL
-  - MSFT
-  - TSLA
-  - AMZN
+  - SPY
 
-# Intraday settings
+# Download Intraday settings
 INTRADAY_INTERVAL: "60min"   # One of: "1min", "5min", "15min", "30min", "60min"
 OUTPUTSIZE: "full"           # "compact" (last 100 pts) or "full"
 
@@ -27,9 +25,8 @@ RISK_FREE_RATE:
 ## Configuration for metrics.py
 # List of stock tickers for calculations
 STOCK_CALCULATION_LIST:
-  - CRCL
-  - MSFT
-  - TSLA
+  - AAPL
+
 
 # Calculation period
 CALCULATION_START_DATE: "2020-01-01"

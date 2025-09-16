@@ -1,0 +1,16 @@
+name: atr_sigma_rvol
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - numpy<2
+  - pandas
+  - scipy
+  - statsmodels
+  - matplotlib
+  - pyyaml
+  - pillow
+  - pip
+  - pip:
+      - alpha_vantage
